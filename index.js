@@ -1,9 +1,26 @@
 var express = require('express');
 var app = express();
 
+var Parse = require('parse/node').Parse;
+Parse.initialize("DPWvUSiBDgjZJuKE2Bk9N5861S4x6ZaomkvOVZQv", 
+	"hwuqtiKpBeWMgAlOfn0DfzVqjmRnHZBs94AJhpaK");
+
 var keyID="YTU1MmU2NmEtNmY0NS00OTY0LWEzNzEtNGViZGQ1OWVlODA2";
 var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 var msg = "Jung has a small dick. 3 inches. So Small";
+
+Parse.Cloud.useMasterKey();
+
+var Habit = Parse.Object.extend("Habit");
+var query = new Parse.Query(Habit);
+query.find({
+    success: function(habits) {
+
+    	console.log(habits);
+    }, error: function() {
+
+    }
+});
 
 var CronJob = require('cron').CronJob;
 new CronJob('00 */30 * * * *', function() {
