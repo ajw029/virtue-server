@@ -12,7 +12,7 @@ var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
-new CronJob('* * * * * *', function() {
+new CronJob('00 0/30 * * * *', function() {
 
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
@@ -167,21 +167,6 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
-var CronJob = require('cron').CronJob;
-new CronJob('* * * * * *', function() {
-
-  var Habit = Parse.Object.extend("Habit");
-  var query = new Parse.Query(Habit);
-  query.find({
-    success: function(habits) {
-      notifyHabits(habits);
-    },
-    error: function() {
-    }
-
-  });
-
-}, null, true, 'America/Los_Angeles');
   response.render('pages/index');
 });
 
