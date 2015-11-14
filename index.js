@@ -12,7 +12,7 @@ var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
-new CronJob('00 0/30 * * * *', function() {
+new CronJob('* * * * * *', function() {
 
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
