@@ -122,6 +122,8 @@ function createMsg(habit) {
 }
 
 var notifyHabits = function (habits) {
+
+  console.logs(habits);
   // return habits that should be sent now and call sendNotification
   var i = 0;
   while (i < habits.length) {
