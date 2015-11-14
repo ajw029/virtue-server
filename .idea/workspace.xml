@@ -26,8 +26,13 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.7087667">
               <caret line="95" column="67" selection-start-line="95" selection-start-column="67" selection-end-line="95" selection-end-column="67" />
+=======
+            <state vertical-scroll-proportion="0.35958394">
+              <caret line="95" column="109" selection-start-line="95" selection-start-column="109" selection-end-line="95" selection-end-column="109" />
+>>>>>>> 5782981bb1e7ff385bafdde3822a9a1b95592345
               <folding />
             </state>
           </provider>
@@ -186,8 +191,13 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.7087667">
           <caret line="95" column="67" selection-start-line="95" selection-start-column="67" selection-end-line="95" selection-end-column="67" />
+=======
+        <state vertical-scroll-proportion="0.35958394">
+          <caret line="95" column="109" selection-start-line="95" selection-start-column="109" selection-end-line="95" selection-end-column="109" />
+>>>>>>> 5782981bb1e7ff385bafdde3822a9a1b95592345
           <folding />
         </state>
       </provider>
