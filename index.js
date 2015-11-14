@@ -8,25 +8,30 @@ Parse.initialize("DPWvUSiBDgjZJuKE2Bk9N5861S4x6ZaomkvOVZQv",
 
 var keyID="YTU1MmU2NmEtNmY0NS00OTY0LWEzNzEtNGViZGQ1OWVlODA2";
 var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
-var msg = "Jung has a small dick. 3 inches. So Small";
 
 Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
 new CronJob('00 */30 * * * *', function() {
 
-  var Habit = Parse.Object.extend("Habit");
-  var query = new Parse.Query(Habit);
-  query.find({
-    success: function(habits) {
-      notifyHabits(habits);
-    },
-    error: function() {
 
-    }
-  });
 }, null, true, 'America/Los_Angeles');
 
+var Habit = Parse.Object.extend("Habit");
+var query = new Parse.Query(Habit);
+query.find({
+  success: function(habits) {
+    notifyHabits(habits);
+  },
+  error: function() {
+
+  }
+});
+
+function getToday() {
+  var today = new Date();
+  return Math.floor(today.getTime() / 86400000); // Days since E`ch
+}
 
 function checkHabit(habit) {
 
@@ -81,7 +86,31 @@ function convertedTimeToTimestamp(time) {
 }
 
 function createMsg(habit) {
+  var dataList = habit.get("dataList");
+  var msg = "completed";
+  var message = {
+    app_id: appID,
+    contents: {"en": msg},
+    included_segments: ["All"],
+    send_after: "2015-11-13 10:00:00 GMT-0700"
+  };
 
+  if (dataList == undefined) return message;
+  var dayFrequency = habit.get("dayFrequency");
+  var i = 0;
+  for (i; i < dataList.length; i++) {
+    var date = dataList[i].date;
+    var today = getToday();
+    if (date == today) {
+      var count = dataList[i].count;
+      if (count < dayFrequency) {
+        msg = "You have completed habit, " + habit.get("title") + count + " out of " + dayFrequency + "times. Keep going!"
+      }
+      break;
+    }
+
+  }
+  return message;
 }
 
 
@@ -104,7 +133,9 @@ var notifyHabits = function (habits) {
 
     if (checkHabit(currHabit)) {
       var msg = createMsg(currHabit);
-      sendNotification(msg);
+      if (msg.contents.en != "completed") {
+        sendNotification(msg);
+      }
     }
     i++;
   }
@@ -139,13 +170,6 @@ var sendNotification = function(data) {
   
   req.write(JSON.stringify(data));
   req.end();
-};
-
-var message = { 
-  app_id: appID,
-  contents: {"en": msg},
-  included_segments: ["All"],
-  send_after: "2015-11-13 10:00:00 GMT-0700"
 };
 
 app.set('port', (process.env.PORT || 5000));
