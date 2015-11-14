@@ -27,28 +27,6 @@ new CronJob('00 0/30 * * * *', function() {
 
 }, null, true, 'America/Los_Angeles');
 
-function startCronJob() {
-	var CronJob = require('cron').CronJob;
-	new CronJob('* * * * * *', function() {
-	var habitList;
-	  var Habit = Parse.Object.extend("Habit");
-	  var query = new Parse.Query(Habit);
-	  query.find({
-	    success: function(habits) {
-	     habitList = habits;
-	     notifyHabits(habits);
-		 return "Starting";
-	    },
-	    error: function() {
-	    	return "Something fucked up";
-	    }
-
-	  });
-
-	}, null, true, 'America/Los_Angeles');
-
-}
-
 function getToday() {
   var today = new Date();
   return Math.floor(today.getTime() / 86400000); // Days since E`ch
@@ -190,11 +168,6 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
   response.render('pages/index');
-});
-
-app.get('/startcronjob', function(request, response) {
-	startCronJob();
-	response.send("OK");
 });
 
 app.listen(app.get('port'), function() {
