@@ -17,16 +17,6 @@ new CronJob('00 */30 * * * *', function() {
 
 }, null, true, 'America/Los_Angeles');
 
-var Habit = Parse.Object.extend("Habit");
-var query = new Parse.Query(Habit);
-query.find({
-  success: function(habits) {
-    notifyHabits(habits);
-  },
-  error: function() {
-
-  }
-});
 
 function getToday() {
   var today = new Date();
@@ -54,8 +44,6 @@ function checkHabit(habit) {
 
 				if (date.getTime() + range > timeStamp &&
 					timeStamp > date.getTime() - range) {
-
-					console.log(habit);
 					return true;
 				}
 
@@ -132,7 +120,9 @@ var notifyHabits = function (habits) {
     var currHabit = habits[i];
 
     if (checkHabit(currHabit)) {
+    	console.log(currHabit.get("title"));
       var msg = createMsg(currHabit);
+      console.log(msg);
       if (msg.contents.en != "completed") {
         sendNotification(msg);
       }
