@@ -12,7 +12,7 @@ var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
-new CronJob('* * * * * *', function() {
+new CronJob('00 0/30 * * * *', function() {
 
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
@@ -30,19 +30,23 @@ new CronJob('* * * * * *', function() {
 function startCronJob() {
 	var CronJob = require('cron').CronJob;
 	new CronJob('* * * * * *', function() {
-
+	var habitList;
 	  var Habit = Parse.Object.extend("Habit");
 	  var query = new Parse.Query(Habit);
 	  query.find({
 	    success: function(habits) {
-	      notifyHabits(habits);
+	     habitList = habits;
+	     notifyHabits(habits);
+		 return "Starting";
 	    },
 	    error: function() {
+	    	return "Something fucked up";
 	    }
 
 	  });
 
 	}, null, true, 'America/Los_Angeles');
+
 }
 
 function getToday() {
@@ -188,6 +192,10 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
+app.get('/startcronjob', function(request, response) {
+	
+	response.send(startCronJob());
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
