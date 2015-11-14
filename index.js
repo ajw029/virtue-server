@@ -84,7 +84,7 @@ function createMsg(habit) {
   var message = {
     app_id: appID,
     contents: {"en": msg},
-    included_segments: ["All"],
+    tags: {"value": habit.getACL(), "key": habit.getACL(), "relation": "="},
     send_after: "2015-11-13 10:00:00 GMT-0700"
   };
 
