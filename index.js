@@ -141,6 +141,7 @@ var notifyHabits = function (habits) {
 };
 
 var sendNotification = function(data) {
+	console.log(data);
   var headers = {
     "Content-Type": "application/json",
     "Authorization": "Basic " + keyID
