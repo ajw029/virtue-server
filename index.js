@@ -193,8 +193,8 @@ app.get('/', function(request, response) {
 });
 
 app.get('/startcronjob', function(request, response) {
-	
-	response.send(startCronJob());
+	startCronJob();
+	response.send("OK");
 });
 
 app.listen(app.get('port'), function() {
