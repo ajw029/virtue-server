@@ -35,6 +35,7 @@ function getToday() {
 
 function checkHabit(habit) {
 	//TODO
+	console.log("checkhabit");
 	var range = 300000*6;
 	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
 
@@ -132,6 +133,7 @@ var notifyHabits = function (habits) {
     if (checkHabit(currHabit)) {
 
       var msg = createMsg(currHabit);
+      console.log("msg content %s", msg.contents.en);
       if (msg.contents.en != "completed") {
         sendNotification(msg);
       }
