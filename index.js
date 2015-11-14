@@ -78,7 +78,7 @@ function createMsg(habit) {
     included_segments: ["All"],
     send_after: "2015-11-13 10:00:00 GMT-0700"
   };
-
+  console.log(dataList);
   if (dataList == undefined) return message;
   var dayFrequency = habit.get("dayFrequency");
   var i = 0;
@@ -88,8 +88,10 @@ function createMsg(habit) {
     var today = getToday();
     if (date == today) {
       var count = dataList[i].count;
+      console.log("count:" + count + " dayFrequency:" + dayFrequency);
       if (count < dayFrequency) {
         msg = "You have completed habit, " + habit.get("title") + count + " out of " + dayFrequency + "times. Keep going!"
+        message.contents.en = msg;
       }
       break;
     }
