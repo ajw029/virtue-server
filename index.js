@@ -90,7 +90,7 @@ function createMsg(habit) {
       var count = dataList[i].count;
       console.log("count:" + count + " dayFrequency:" + dayFrequency);
       if (count < dayFrequency) {
-        msg = "You have completed habit, " + habit.get("title") + count + " out of " + dayFrequency + "times. Keep going!"
+        msg = "You have completed habit, " + habit.get("title")+ " " + count + " out of " + dayFrequency + "times. Keep going!"
         message.contents.en = msg;
       }
       break;
