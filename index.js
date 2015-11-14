@@ -13,7 +13,7 @@ Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
 //TODO
-new CronJob('0/15 * * * * *', function() {
+new CronJob('0 0/30 * * * *', function() {
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
   query.find({
@@ -34,8 +34,7 @@ function getToday() {
 }
 
 function checkHabit(habit) {
-	//TODO
-	var range = 300000*6;
+	var range = 300000;
 	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
 
 	var alarmList = habit.get("alarms");
