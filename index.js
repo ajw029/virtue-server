@@ -12,22 +12,42 @@ var msg = "Jung has a small dick. 3 inches. So Small";
 
 Parse.Cloud.useMasterKey();
 
-var Habit = Parse.Object.extend("Habit");
-var query = new Parse.Query(Habit);
-query.find({
-    success: function(habits) {
-
-    	console.log(habits);
-    }, error: function() {
-
-    }
-});
-
 var CronJob = require('cron').CronJob;
 new CronJob('00 */30 * * * *', function() {
-  sendNotification(message);
+
+  var Habit = Parse.Object.extend("Habit");
+  var query = new Parse.Query(Habit);
+  query.find({
+    success: function(habits) {
+      notifyHabits(habits);
+    },
+    error: function() {
+
+    }
+  });
 }, null, true, 'America/Los_Angeles');
 
+
+function checkHabit(habit) {
+
+}
+
+function createMsg(habit) {
+
+}
+
+var notifyHabits = function (habits) {
+  // return habits that should be sent now and call sendNotification
+  var i = 0;
+  while (i < habits.length) {
+    var currHabit = habits[i];
+    if (checkHabit(currHabit)) {
+      var msg = createMsg(currHabit);
+      sendNotification(msg);
+    }
+    i++;
+  }
+};
 
 var sendNotification = function(data) {
   var headers = {
