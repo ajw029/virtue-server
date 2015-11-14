@@ -35,6 +35,7 @@ function getToday() {
 
 function checkHabit(habit) {
 	//TODO
+	return true;
 	console.log("checkhabit");
 	var range = 300000*6;
 	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
