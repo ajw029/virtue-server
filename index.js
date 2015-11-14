@@ -80,12 +80,13 @@ function convertedTimeToTimestamp(time) {
 
 function createMsg(habit) {
   var dataList = habit.get("dataList");
-  console.log(habit.get("ACL") );
+  var userId = Object.keys(habit.get("ACL").permissionsById)[0];
+
   var msg = "completed";
   var message = {
     app_id: appID,
     contents: {"en": msg},
-    tags: [{"value": habit.getACL(), "key": habit.getACL(), "relation": "="}],
+    tags: [{"value": userId, "key": userId, "relation": "="}],
     send_after: "2015-11-13 10:00:00 GMT-0700"
   };
 
@@ -98,7 +99,6 @@ function createMsg(habit) {
     var today = getToday();
     if (date == today) {
       var count = dataList[i].count;
-      console.log("count:" + count + " dayFrequency:" + dayFrequency);
       if (count < dayFrequency) {
         msg = "You have completed habit, " + habit.get("title")+ " " + count + " out of " + dayFrequency + " times. Keep going!"
         message.contents.en = msg;
@@ -117,9 +117,7 @@ var notifyHabits = function (habits) {
     var currHabit = habits[i];
 
     if (checkHabit(currHabit)) {
-    	console.log(currHabit.get("title"));
       var msg = createMsg(currHabit);
-      console.log(msg);
       if (msg.contents.en != "completed") {
         sendNotification(msg);
       }
