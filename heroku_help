@@ -1,0 +1,17 @@
+
+//login to heroku
+heroku login
+
+//creates new git repo
+heroku create
+
+git stuff
+
+//displays all apps
+heroku apps
+
+//tail log for app 
+heroku logs --app nameofapp -t
+
+//to stop the server
+heroku ps:scale web=0 --app nameofapp
