@@ -35,15 +35,20 @@ function getToday() {
 
 function checkHabit(habit) {
 	//TODO
-	return true;
-	console.log("checkhabit");
 	var range = 300000*6;
 	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
 
 	var alarmList = habit.get("alarms");
+	console.log("test1");
 	if (alarmList != undefined) {
+		
+		console.log("test2");
+		console.log(alarmList);
 
 		var date = new Date();
+		
+		console.log("test3");
+		console.log(date);
 
 		if (weekFrequency[date.getDay()]) {
 			var alarms = JSON.parse(alarmList).alarmlist;
@@ -52,6 +57,8 @@ function checkHabit(habit) {
 			for (j; j<alarmLength; j++) {
 				var timeStamp = convertedTimeToTimestamp(alarms[j].time);
 
+					console.log("test4");
+					console.log(timeStamp);
 				if (date.getTime() + range > timeStamp &&
 					timeStamp > date.getTime() - range) {
 					return true;
@@ -124,8 +131,6 @@ function createMsg(habit) {
 }
 
 var notifyHabits = function (habits) {
-
-  console.log(habits);
   // return habits that should be sent now and call sendNotification
   var i = 0;
   while (i < habits.length) {
@@ -134,7 +139,6 @@ var notifyHabits = function (habits) {
     if (checkHabit(currHabit)) {
 
       var msg = createMsg(currHabit);
-      console.log("msg content %s", msg.contents.en);
       if (msg.contents.en != "completed") {
         sendNotification(msg);
       }
@@ -144,7 +148,6 @@ var notifyHabits = function (habits) {
 };
 
 var sendNotification = function(data) {
-	console.log(data);
   var headers = {
     "Content-Type": "application/json",
     "Authorization": "Basic " + keyID
