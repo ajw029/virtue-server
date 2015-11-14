@@ -13,12 +13,12 @@ Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
 //TODO
-new CronJob('* * * * * *', function() {
-  console.log("YAYSDFDS");
+new CronJob('0/15 * * * * *', function() {
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
   query.find({
     success: function(habits) {
+      console.log("Gotcha");
       notifyHabits(habits);
     },
     error: function() {
