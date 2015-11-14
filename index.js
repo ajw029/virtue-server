@@ -30,17 +30,78 @@ new CronJob('00 */30 * * * *', function() {
 
 function checkHabit(habit) {
 
+	var range = 300000;
+	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
+
+	var alarmList = habit.get("alarms");
+	if (alarmList != undefined) {
+
+		var date = new Date();
+
+		if (weekFrequency[date.getDay()]) {
+			var alarms = JSON.parse(alarmList).alarmlist;
+			var alarmLength = alarms.length;
+			var j = 0;
+			for (j; j<alarmLength; j++) {
+				var timeStamp = convertedTimeToTimestamp(alarms[j].time);
+				console.log(timeStamp);
+				console.log(date.getTime() + range );
+
+				if (date.getTime() + range > timeStamp &&
+					timeStamp > date.getTime() - range) {
+
+					console.log(habit);
+					return true;
+				}
+
+			}
+		}		
+	}
+	//console.log(weekFrequency);
+	
+	return false;
+}
+
+function convertedTimeToTimestamp(time) {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+	var parsedTime;
+	if (time.length == 6) {
+		parsedTime= time.substring(0, 4) + " " + time.substring(4);
+	}
+	else {
+		parsedTime = time.substring(0, 5) + " " + time.substring(5);		
+	}	
+	
+	var parsedDate = mm + "/" + dd + "/" +yyyy + " " + parsedTime;
+	var date1 = new Date(parsedDate).getTime();
+	return date1;
 }
 
 function createMsg(habit) {
 
 }
 
+
+  var Habit = Parse.Object.extend("Habit");
+  var query = new Parse.Query(Habit);
+  query.find({
+    success: function(habits) {
+      notifyHabits(habits);
+    },
+    error: function() {
+
+    }
+  });
+
 var notifyHabits = function (habits) {
   // return habits that should be sent now and call sendNotification
   var i = 0;
   while (i < habits.length) {
     var currHabit = habits[i];
+
     if (checkHabit(currHabit)) {
       var msg = createMsg(currHabit);
       sendNotification(msg);
@@ -102,3 +163,4 @@ app.get('/', function(request, response) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
+
