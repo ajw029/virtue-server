@@ -39,18 +39,14 @@ function checkHabit(habit) {
 			var j = 0;
 			for (j; j<alarmLength; j++) {
 				var timeStamp = convertedTimeToTimestamp(alarms[j].time);
-				console.log(timeStamp);
-				console.log(date.getTime() + range );
 
 				if (date.getTime() + range > timeStamp &&
 					timeStamp > date.getTime() - range) {
 					return true;
 				}
-
 			}
 		}		
 	}
-	//console.log(weekFrequency);
 	
 	return false;
 }
@@ -86,6 +82,7 @@ function createMsg(habit) {
   if (dataList == undefined) return message;
   var dayFrequency = habit.get("dayFrequency");
   var i = 0;
+
   for (i; i < dataList.length; i++) {
     var date = dataList[i].date;
     var today = getToday();
