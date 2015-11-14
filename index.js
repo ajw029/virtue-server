@@ -167,6 +167,21 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
+var CronJob = require('cron').CronJob;
+new CronJob('* * * * * *', function() {
+
+  var Habit = Parse.Object.extend("Habit");
+  var query = new Parse.Query(Habit);
+  query.find({
+    success: function(habits) {
+      notifyHabits(habits);
+    },
+    error: function() {
+    }
+
+  });
+
+}, null, true, 'America/Los_Angeles');
   response.render('pages/index');
 });
 
