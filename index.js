@@ -12,11 +12,20 @@ var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
-new CronJob('00 */30 * * * *', function() {
+new CronJob('00 */1 * * * *', function() {
 
+  var Habit = Parse.Object.extend("Habit");
+  var query = new Parse.Query(Habit);
+  query.find({
+    success: function(habits) {
+      notifyHabits(habits);
+    },
+    error: function() {
+    }
+
+  });
 
 }, null, true, 'America/Los_Angeles');
-
 
 function getToday() {
   var today = new Date();
@@ -78,7 +87,7 @@ function createMsg(habit) {
     included_segments: ["All"],
     send_after: "2015-11-13 10:00:00 GMT-0700"
   };
-  console.log(dataList);
+
   if (dataList == undefined) return message;
   var dayFrequency = habit.get("dayFrequency");
   var i = 0;
@@ -99,18 +108,6 @@ function createMsg(habit) {
   }
   return message;
 }
-
-
-  var Habit = Parse.Object.extend("Habit");
-  var query = new Parse.Query(Habit);
-  query.find({
-    success: function(habits) {
-      notifyHabits(habits);
-    },
-    error: function() {
-
-    }
-  });
 
 var notifyHabits = function (habits) {
   // return habits that should be sent now and call sendNotification
