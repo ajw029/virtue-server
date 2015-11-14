@@ -3,7 +3,8 @@ var app = express();
 
 var Parse = require('parse/node').Parse;
 Parse.initialize("DPWvUSiBDgjZJuKE2Bk9N5861S4x6ZaomkvOVZQv", 
-	"hwuqtiKpBeWMgAlOfn0DfzVqjmRnHZBs94AJhpaK");
+	"hwuqtiKpBeWMgAlOfn0DfzVqjmRnHZBs94AJhpaK",
+	"aLEfe9WAV1hpupnqywh2AHKzcJjoE4uD7OKzMhld");
 
 var keyID="YTU1MmU2NmEtNmY0NS00OTY0LWEzNzEtNGViZGQ1OWVlODA2";
 var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
