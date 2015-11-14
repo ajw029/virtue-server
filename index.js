@@ -12,7 +12,7 @@ var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
-new CronJob('00 */1 * * * *', function() {
+new CronJob('* * * * * *', function() {
 
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
@@ -80,11 +80,12 @@ function convertedTimeToTimestamp(time) {
 
 function createMsg(habit) {
   var dataList = habit.get("dataList");
+  console.log(habit.get("ACL") );
   var msg = "completed";
   var message = {
     app_id: appID,
     contents: {"en": msg},
-    tags: {"value": habit.getACL(), "key": habit.getACL(), "relation": "="},
+    tags: [{"value": habit.getACL(), "key": habit.getACL(), "relation": "="}],
     send_after: "2015-11-13 10:00:00 GMT-0700"
   };
 
