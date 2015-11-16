@@ -13,12 +13,12 @@ Parse.Cloud.useMasterKey();
 
 var CronJob = require('cron').CronJob;
 //TODO
-new CronJob('0 0/30 * * * *', function() {
+new CronJob('00 */30 * * * *', function() {
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
   query.find({
     success: function(habits) {
-      console.log("Gotcha");
+
       notifyHabits(habits);
     },
     error: function() {
@@ -34,21 +34,15 @@ function getToday() {
 }
 
 function checkHabit(habit) {
-	var range = 300000;
+	var range = 300000 * 3;
 	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
 
 	var alarmList = habit.get("alarms");
-	console.log("test1");
+
 	if (alarmList != undefined) {
-		
-		console.log("test2");
-		console.log(alarmList);
 
 		var date = new Date();
 		
-		console.log("test3");
-		console.log(date);
-
 		if (weekFrequency[date.getDay()]) {
 			var alarms = JSON.parse(alarmList).alarmlist;
 			var alarmLength = alarms.length;
@@ -56,8 +50,6 @@ function checkHabit(habit) {
 			for (j; j<alarmLength; j++) {
 				var timeStamp = convertedTimeToTimestamp(alarms[j].time);
 
-					console.log("test4");
-					console.log(timeStamp);
 				if (date.getTime() + range > timeStamp &&
 					timeStamp > date.getTime() - range) {
 					return true;
@@ -139,6 +131,8 @@ var notifyHabits = function (habits) {
 
       var msg = createMsg(currHabit);
       if (msg.contents.en != "completed") {
+        console.log(msg);
+        console.log(new Date());
         sendNotification(msg);
       }
     }
