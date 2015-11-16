@@ -34,7 +34,7 @@ function getToday() {
 }
 
 function checkHabit(habit) {
-	var range = 300000 * 3;
+	var range = 300000;
 	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
 
 	var alarmList = habit.get("alarms");
