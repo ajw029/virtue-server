@@ -11,9 +11,14 @@ var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 
 Parse.Cloud.useMasterKey();
 
+var atob = require('atob')
+  , b64 = "SGVsbG8gV29ybGQ="
+  , bin = atob(b64)
+  ;
+
 var CronJob = require('cron').CronJob;
 //TODO
-new CronJob('00 */30 * * * *', function() {
+new CronJob('00 */1 * * * *', function() {
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
   query.find({
@@ -28,13 +33,14 @@ new CronJob('00 */30 * * * *', function() {
 
 }, null, true, 'America/Los_Angeles');
 
+
 function getToday() {
   var today = new Date();
   return Math.floor(today.getTime() / 86400000); // Days since E`ch
 }
 
 function checkHabit(habit) {
-	var range = 300000;
+	var range = 300000*6;
 	var weekFrequency = JSON.parse(habit.get("weekFrequency"));
 
 	var alarmList = habit.get("alarms");
@@ -106,7 +112,7 @@ function createMsg(habit) {
       entryExists = true;
       var count = dataList[i].count;
       if (count < dayFrequency) {
-        msg = "You have completed habit, " + habit.get("title")+ " " + count + " out of " + dayFrequency + " times. Keep going!"
+        msg = "You have completed habit, " + atob(habit.get("title")) + " " + count + " out of " + dayFrequency + " times. Keep going!"
         message.contents.en = msg;
       }
       break;
@@ -114,7 +120,7 @@ function createMsg(habit) {
 
   }
   if (!entryExists) {
-    msg = "You have completed habit, " + habit.get("title")+ " " + 0 + " out of " + dayFrequency + " times. Keep going!"
+    msg = "You have completed habit, " + atob(habit.get("title")) + " " + 0 + " out of " + dayFrequency + " times. Keep going!"
     message.contents.en = msg;   
   }
 
