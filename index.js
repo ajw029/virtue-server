@@ -28,6 +28,9 @@ new CronJob('00 */30 * * * *', function() {
 
   });
 
+  var http = require('http');
+  http.get("http://<your app name>.herokuapp.com");
+
 }, null, true, 'America/Los_Angeles');
 
 
