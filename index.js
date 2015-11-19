@@ -15,7 +15,7 @@ var atob = require('atob'), b64 = "SGVsbG8gV29ybGQ=", bin = atob(b64);
 
 var CronJob = require('cron').CronJob;
 //TODO
-new CronJob('00 */1 * * * *', function() {
+new CronJob('00 */30 * * * *', function() {
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
   query.find({
