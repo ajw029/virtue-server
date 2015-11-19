@@ -16,6 +16,7 @@ var atob = require('atob'), b64 = "SGVsbG8gV29ybGQ=", bin = atob(b64);
 var CronJob = require('cron').CronJob;
 //TODO
 new CronJob('00 */1 * * * *', function() {
+  console.log("Starting cron job...");
   var Habit = Parse.Object.extend("Habit");
   var query = new Parse.Query(Habit);
   query.find({
