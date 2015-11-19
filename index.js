@@ -11,10 +11,7 @@ var appID = "ef564910-2cc3-409c-8cd5-57942abd2141";
 
 Parse.Cloud.useMasterKey();
 
-var atob = require('atob')
-  , b64 = "SGVsbG8gV29ybGQ="
-  , bin = atob(b64)
-  ;
+var atob = require('atob'), b64 = "SGVsbG8gV29ybGQ=", bin = atob(b64);
 
 var CronJob = require('cron').CronJob;
 //TODO
