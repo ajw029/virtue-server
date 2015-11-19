@@ -30,7 +30,7 @@ new CronJob('00 */1 * * * *', function() {
   });
 
   var http = require('http');
-  http.get("http://<your app name>.herokuapp.com");
+  http.get("http://virtue007.herokuapp.com");
 
 }, null, true, 'America/Los_Angeles');
 
